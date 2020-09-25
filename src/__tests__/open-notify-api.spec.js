@@ -9,11 +9,13 @@ describe('International Space Station', () => {
     it('Get Pass Times', () => {
         response('/iss-pass.json')
             .query({ lat: '50', lon: '100' })
+            .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200);
     });
     it('Get People in Space', () => {
         response('/astros.json')
+            .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200);
     });
