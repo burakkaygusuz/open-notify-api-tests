@@ -1,26 +1,35 @@
 const request = require('supertest');
-const { describe, it } = require('@jest/globals');
+const { expect, describe, test } = require('@jest/globals');
 
 describe('International Space Station', () => {
-    it('Get Position', () => {
-        response('/iss-now.json')
-            .then(res => { res.body.message }, 'success');
-    });
-    it('Get Pass Times', () => {
-        response('/iss-pass.json')
-            .query({ lat: '50', lon: '100' })
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(200);
-    });
-    it('Get People in Space', () => {
-        response('/astros.json')
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /json/)
-            .expect(200);
-    });
-});
+    test('Get Position', async () => {
+        const response = await request('http://api.open-notify.org')
+            .get('/iss-now.json');
 
-const response = (route) => {
-    return request('http://api.open-notify.org').get(route);
-};
+        expect(response.statusCode).toEqual(200);
+        expect(response.body.message).toEqual('success');
+
+        console.log('Get Position ' + JSON.stringify(response.body, null, "\t"));
+    });
+    test('Get Pass Times', async () => {
+        const response = await request('http://api.open-notify.org')
+            .get('/iss-pass.json')
+            .query({ lat: '50', lon: '100' });
+
+        console.log('Get Pass Times ' + JSON.stringify(response.body, null, "\t"));
+
+        expect(response.statusCode).toEqual(200);
+        expect(response.type).toEqual("application/json");
+        expect(response.body.request.latitude).toEqual(50);
+        expect(response.body.request.longitude).toEqual(100);
+    });
+    test('Get People in Space', async () => {
+        const response = await request('http://api.open-notify.org')
+            .get('/astros.json');
+
+        expect(response.statusCode).toEqual(200);
+        expect(response.body.number).toEqual(3);
+
+        console.log('Get People in Space ' + JSON.stringify(response.body, null, "\t"));
+    })
+});
