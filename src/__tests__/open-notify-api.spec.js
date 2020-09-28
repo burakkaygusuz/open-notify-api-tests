@@ -7,6 +7,7 @@ describe('International Space Station', () => {
             .get('/iss-now.json');
 
         expect(response.statusCode).toEqual(200);
+        expect(response.body).not.toBeNull();
         expect(response.body.message).toEqual('success');
     });
     test('Get People in Space', async () => {
@@ -15,5 +16,5 @@ describe('International Space Station', () => {
 
         expect(response.statusCode).toEqual(200);
         expect(response.body.number).toEqual(3);
-    })
+    });
 });
