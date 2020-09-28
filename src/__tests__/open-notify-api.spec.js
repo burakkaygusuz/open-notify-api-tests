@@ -11,18 +11,6 @@ describe('International Space Station', () => {
 
         console.log('Get Position ' + JSON.stringify(response.body, null, "\t"));
     });
-    test('Get Pass Times', async () => {
-        const response = await request('http://api.open-notify.org')
-            .get('/iss-pass.json')
-            .query({ lat: '50', lon: '100' });
-
-        console.log('Get Pass Times ' + JSON.stringify(response.body, null, "\t"));
-
-        expect(response.statusCode).toEqual(200);
-        expect(response.type).toEqual("application/json");
-        expect(response.body.request.latitude).toEqual(50);
-        expect(response.body.request.longitude).toEqual(100);
-    });
     test('Get People in Space', async () => {
         const response = await request('http://api.open-notify.org')
             .get('/astros.json');
