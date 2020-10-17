@@ -9,8 +9,8 @@
   "main": "index.js",
   "dependencies": {},
   "devDependencies": {
-    "@jest/globals": "^26.4.2",
-    "jest": "^26.4.2",
+    "@jest/globals": "^26.5.3",
+    "jest": "^26.5.3",
     "supertest": "^5.0.0"
   },
   "scripts": {
